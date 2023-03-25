@@ -10,6 +10,7 @@ import CoreML
 import Vision
 
 class ViewController: UIViewController {
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var labelDescription: UILabel!
     
@@ -17,7 +18,7 @@ class ViewController: UIViewController {
        
         super.viewDidLoad()
         
-        let imagePath = Bundle.main.path(forResource: "car", ofType: "jpg")
+        let imagePath = Bundle.main.path(forResource: "car", ofType: "jpeg")
         let imageURL = NSURL.fileURL(withPath: imagePath!)
         
         let modelFile = MobileNetV2()
@@ -28,10 +29,11 @@ class ViewController: UIViewController {
         try! handler.perform([request])
         
     }
+    
     func findResults(request: VNRequest, error: Error?) {
        guard let results = request.results as?
        [VNClassificationObservation] else {
-           atalError("Unable to get results")
+           fatalError("Unable to get results")
            }
        var bestGuess = ""
        var bestConfidence: VNConfidence = 0
