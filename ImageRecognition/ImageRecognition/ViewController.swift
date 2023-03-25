@@ -28,7 +28,23 @@ class ViewController: UIViewController {
         try! handler.perform([request])
         
     }
+    func findResults(request: VNRequest, error: Error?) {
+       guard let results = request.results as?
+       [VNClassificationObservation] else {
+           atalError("Unable to get results")
+           }
+       var bestGuess = ""
+       var bestConfidence: VNConfidence = 0
+       for classification in results {
+          if (classification.confidence > bestConfidence) {
+             bestConfidence = classification.confidence
+             bestGuess = classification.identifier
+          }
+       }
+       labelDescription.text = "Image is: \(bestGuess) with confidence \(bestConfidence) out of 1"
+    }
 
 
 }
+
 
